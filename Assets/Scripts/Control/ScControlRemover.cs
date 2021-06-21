@@ -6,14 +6,14 @@ using RPG.Core;
 namespace RPG.Control
 {
 
-    public class ScPlayerControlRemover : MonoBehaviour
+    public class ScControlRemover : MonoBehaviour
     {
         GameObject player;
 
         private void Start()
         {
             player = GameObject.FindGameObjectWithTag("Player");
-            ScFakePlayableDirector.Instance.onPlayed += DisableControl;
+            ScFakePlayableDirector.Instance.onPlayed += DisableControl; //subscribe ke event handler
             ScFakePlayableDirector.Instance.onStopped += EnableControl;
         }
         void DisableControl()

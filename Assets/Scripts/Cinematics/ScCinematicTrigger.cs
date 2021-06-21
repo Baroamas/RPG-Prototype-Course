@@ -15,13 +15,9 @@ namespace RPG.Cinematics
                 alreadyTriggered = true;
                 // GetComponent<PlayableDirector>().Play();
                 ScFakePlayableDirector.Instance.Play();
-                
+
                 Debug.Log("OBSERVERPATTERNTEST!");
 
-            }
-            else
-            {   alreadyTriggered = false;
-                Debug.Log("ReFalse for Purpose of Research");
             }
         }
     }

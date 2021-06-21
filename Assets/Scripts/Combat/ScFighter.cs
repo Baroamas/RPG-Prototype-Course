@@ -78,7 +78,7 @@ namespace RPG.Combat
         public void CancelAction()
         {
             //GetComponent<ScMover>().CancelAction(); Uncomment untuk stop moving bila perlu
-            CancelAttackAnimation();
+                     CancelAttackAnimation();
             _target = null;
             GetComponent<ScMover>().CancelAction();
 
