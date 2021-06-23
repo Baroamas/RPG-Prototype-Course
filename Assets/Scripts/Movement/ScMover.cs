@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 using RPG.Core;
-using RPG.Saving;
 
 namespace RPG.Movement
 {
-    public class ScMover : MonoBehaviour, IAction, ISaveable
+    public class ScMover : MonoBehaviour, IAction
     {
         NavMeshAgent _navMeshAgent;
 
@@ -74,34 +73,39 @@ namespace RPG.Movement
             #endregion
         }
 
-        [System.Serializable]
-        struct MoverSaveData
-        {
-            public SerializableVector3 position;
-            public SerializableVector3 rotation;
-        }
-
-        public object CaptureState()
-        {
-            MoverSaveData data = new MoverSaveData();
-            data.position = new SerializableVector3(transform.position);
-            data.rotation = new SerializableVector3(transform.eulerAngles);
-
-            return data;
-            //return new SerializableVector3(transform.position);
-        }
-
-        public void RestoreState(object state)
-        {
-            MoverSaveData data = (MoverSaveData)state;
-            GetComponent<NavMeshAgent>().Warp(data.position.ToVector());
-            transform.eulerAngles = data.rotation.ToVector();
 
 
-            //SerializableVector3 position = (SerializableVector3)state;
-            //GetComponent<NavMeshAgent>().Warp(position.ToVector());
 
-        }
+        #region Section 8 Saving Stuff
+        /*
+                [System.Serializable]
+                struct MoverSaveData
+                {
+                    public SerializableVector3 position;
+                    public SerializableVector3 rotation;
+                }
+
+                public object CaptureState()
+                {
+                    MoverSaveData data = new MoverSaveData();
+                    data.position = new SerializableVector3(transform.position);
+                    data.rotation = new SerializableVector3(transform.eulerAngles);
+
+                    return data;
+                    //return new SerializableVector3(transform.position);
+                }
+
+                public void RestoreState(object state)
+                {
+                    MoverSaveData data = (MoverSaveData)state;
+                    GetComponent<NavMeshAgent>().Warp(data.position.ToVector());
+                    transform.eulerAngles = data.rotation.ToVector();
+
+
+                    //SerializableVector3 position = (SerializableVector3)state;
+                    //GetComponent<NavMeshAgent>().Warp(position.ToVector());
+                }
+        */
+        #endregion
     }
-
 }

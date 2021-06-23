@@ -14,7 +14,17 @@ namespace RPG.Control
         }
         private void Update()
         {
-            if (!_health.IsDead && Input.GetMouseButton(1))
+            if (_health.IsDead) return;
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+               // GetComponent<ScFighter>().EquipWeapon();
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                //GetComponent<ScFighter>().UnequipWeapon();
+            }
+
+            if (Input.GetMouseButton(1))
             {//bisa letakkan input getmouse di method interact with movement, tapi raycast pada interactwithcombat jalan terus
 
                 if (InteractWithCombat()) return;

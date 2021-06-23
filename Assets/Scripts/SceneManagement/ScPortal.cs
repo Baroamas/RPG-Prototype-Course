@@ -42,14 +42,14 @@ namespace RPG.SceneManagement
 
             fader = GameObject.FindObjectOfType<ScFader>();
             yield return fader.FadeOut(_fadeOutTime);
-            ScSavingWrapper.Instance.Save();
+            //ScSavingWrapper.Instance.Save();
 
             yield return SceneManager.LoadSceneAsync(_destinationName);
 
-            ScSavingWrapper.Instance.Load();
+            // ScSavingWrapper.Instance.Load();
 
             SetPlayerSpawn(GetPortal());
-            ScSavingWrapper.Instance.Save();
+            //ScSavingWrapper.Instance.Save();
 
             yield return new WaitForSeconds(_fadeInTime);
             yield return fader.FadeIn(_fadeWaitTime);

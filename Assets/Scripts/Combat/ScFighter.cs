@@ -7,14 +7,21 @@ namespace RPG.Combat
 {
     public class ScFighter : MonoBehaviour, IAction
     {
-        [SerializeField] float _weaponRange = 2f;
-        [SerializeField] float _timeBetweenAttacks = 1f;
-        [SerializeField] float _weaponDamage = 10f;
+        [SerializeField] Transform _rightHandTransform = null;
+        [SerializeField] Transform _leftHandTransform = null;
+        [SerializeField] ScObjWeapon _defaultWeapon = null;
+        [SerializeField] ScArrow _arrow;
+
+        ScObjWeapon _currentWeapon = null;
+
         float _relativeDistance;
         float _timeSinceLastAttack = 0;
         ScHealth _target;
 
-
+        private void Start()
+        {
+            EquipWeapon(_defaultWeapon);
+        }
         private void Update()
         {
             _timeSinceLastAttack += Time.deltaTime;
@@ -49,7 +56,7 @@ namespace RPG.Combat
         }
         private void AttackBehaviour()
         {
-            if (_timeSinceLastAttack > _timeBetweenAttacks)
+            if (_timeSinceLastAttack > _currentWeapon.TimeBetweenAttacks)
             {
                 GetComponent<ScMover>().RotateToward(_target.transform.position);
                 TriggerAttackAnimation();
@@ -67,18 +74,37 @@ namespace RPG.Combat
         //AnimationEvent
         void Hit()
         {
-            _target?.TakeDamage(_weaponDamage);
+            _target?.TakeDamage(_currentWeapon.WeaponDamage);
         }
+
+        void Shoot()
+        {
+            if (_target == null) return;
+            ScArrow arrow = Instantiate(_arrow, _leftHandTransform.position, Quaternion.identity);
+            arrow.SetTarget(_target);
+            arrow.Damage = _currentWeapon.WeaponDamage;
+            //Simpan Arrow pada player karna arrow cuma satu.. kalau kagak mungkin bakal ada SetArrow();
+        }
+
+        void CastMagic()
+        {   
+            if (_target == null) return;
+
+            ScMagicProjectile magic = Instantiate(_currentWeapon.Projectile, _leftHandTransform.position, Quaternion.identity).GetComponent<ScMagicProjectile>();
+            magic.SetTarget(_target);
+            magic.Damage = _currentWeapon.WeaponDamage;
+        }
+
 
         private bool GetIsOutRange()
         {
-            return Vector3.Distance(_target.transform.position, transform.position) > _weaponRange;
+            return Vector3.Distance(_target.transform.position, transform.position) > _currentWeapon.WeaponRange;
         }
 
         public void CancelAction()
         {
             //GetComponent<ScMover>().CancelAction(); Uncomment untuk stop moving bila perlu
-                     CancelAttackAnimation();
+            CancelAttackAnimation();
             _target = null;
             GetComponent<ScMover>().CancelAction();
 
@@ -89,5 +115,15 @@ namespace RPG.Combat
             GetComponent<Animator>().SetTrigger("cancelAttack");
             GetComponent<Animator>().ResetTrigger("attack");
         }
+
+        public void EquipWeapon(ScObjWeapon weapon)
+        {
+            _currentWeapon = weapon;
+
+            Animator animator = GetComponent<Animator>();
+
+            weapon.Equip(_rightHandTransform, _leftHandTransform, animator);
+        }
+
     }
 }

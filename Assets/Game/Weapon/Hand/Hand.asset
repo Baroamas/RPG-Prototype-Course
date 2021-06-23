@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d3c2af6b72d054ba4e280a0fcd317b, type: 3}
+  m_Name: Hand
+  m_EditorClassIdentifier: 
+  _weaponPrefab: {fileID: 0}
+  _weaponAnimatorOverride: {fileID: 22100000, guid: 9fb9608d8f068c54a9df794424501220, type: 2}
+  _weaponDamage: 5
+  _weaponRange: 2
+  _timeBetweenAttacks: 1
